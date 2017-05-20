@@ -17,8 +17,8 @@ class Location extends Migration
             $table->increments('id');
             $table->string('formatted_address');
             $table->string('state');
-            $table->string('district');
-            $table->string('locality');
+            $table->string('district')->nullable();
+            $table->string('locality')->nullable();
             $table->integer('created_by')->unsigned();
             $table->timestamps();
         });

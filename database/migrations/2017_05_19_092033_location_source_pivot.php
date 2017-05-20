@@ -17,6 +17,7 @@ class LocationSourcePivot extends Migration
                     $table->integer('location_id')->unsigned();
                     $table->integer('source_id')->unsigned();
                     $table->integer('truck_type')->unsigned();
+                    $table->timestamps();
                 });
 
         Schema::table('location_source_pivot',function ($table){

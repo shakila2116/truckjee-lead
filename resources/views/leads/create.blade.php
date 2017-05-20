@@ -10,73 +10,90 @@
         <div class="panel-heading">
             Leads -Create
         </div>
-        <div class="panel-body">
-            <div id="app">
-                {{ message }}
+        <div class="panel-body" id="lead-form">
+            <div class="col-md-6">
+
+                <table v-show="locations.length" class="table table-bordered">
+                    <thead>
+                    <tr>
+                        <th class="col-md-6">Route</th>
+                    </tr>
+                    </thead>
+                    <tr v-for="(location, index) in locations">
+                        <td>@{{ location.formatted_address }}</td>
+                    </tr>
+                </table>
             </div>
 
-
-            <div class="col-md-6" id="leads">
-                <ul class="list-group col-md-offset-5">
-                    <li class="list-group-item">Name : </li>
-                    <li class="list-group-item">Phone : </li>
-                    <li class="list-group-item">Email : </li>
-                    {{--<li class="list-group-item">Locality :</li>--}}
-
-                </ul>
+            <div class="col-md-6">
+        <form  v-on:submit.prevent="create()" >
+            <div class="form-group">
+                {{--<div class="col-md-6">--}}
+                    <input type="text" class="form-control" required placeholder="Name" v-model="form.name">
+                {{--</div>--}}
             </div>
-        </div>
-        {{--<div class="panel-body">--}}
-            {{--<form class="form-horizontal" method="post" action="{{url('/leads')}}">--}}
-                {{--<div class="form-group">--}}
-                    {{--<div class="col-md-6">--}}
-                        {{--<input type="text" class="form-control col-md-offset-5" required placeholder="Name">--}}
-                    {{--</div>--}}
+            <div class="form-group">
+                {{--<div class="col-md-6">--}}
+                    <input type="text" class="form-control" required placeholder="Company Name" v-model="form.cmpny_name" >
                 {{--</div>--}}
-                {{--<div class="form-group">--}}
-                    {{--<div class="col-md-6">--}}
-                        {{--<input type="text" class="form-control col-md-offset-5" required placeholder="Company Name" name="cmpny_name" >--}}
-                    {{--</div>--}}
-                {{--</div>--}}
-                {{--<div class="form-group">--}}
-                    {{--<div class="col-md-6">--}}
-                        {{--<input type="text" class="form-control col-md-offset-5" required placeholder="Mobile No" name="phone" >--}}
-                    {{--</div>--}}
-                {{--</div>--}}
-                {{--<div class="form-group">--}}
-                    {{--<div class="col-md-6">--}}
-                        {{--<input type="text" class="form-control col-md-offset-5" required placeholder="Email" name="name" >--}}
-                    {{--</div>--}}
-                {{--</div>--}}
-                {{--<div class="form-group">--}}
-                    {{--<div class="col-md-6">--}}
-                        {{--<select type="text" class="form-control col-md-offset-5" required>--}}
-                            {{--<option></option>--}}
-                            {{--<option value="1"> Broker</option>--}}
-                            {{--<option value="2"> Owner</option>--}}
-                        {{--</select>--}}
-                    {{--</div>--}}
-                {{--</div>--}}
-                {{--<div class="form-group">--}}
-                    {{--<div class="col-md-6">--}}
-                        {{--<input type="text" class="form-control" id="location" name=location placeholder="Location">--}}
-                        {{--<div id="locality_details">--}}
-                            {{--<input id="administrative_area_level_1" type="text"--}}
-                                   {{--hidden>--}}
-                            {{--<input id="administrative_area_level_2"--}}
-                                   {{--type="text"--}}
-                                   {{--hidden>--}}
-                            {{--<input id="locality" type="text" hidden>--}}
-                            {{--<input id="formatted_address" type="text" hidden>--}}
-                        {{--</div>--}}
-                    {{--</div>--}}
+            </div>
 
+            <div class="form-group">
+                {{--<div class="col-md-6">--}}
+                    <input type="text" class="form-control" required placeholder="Mobile No" v-model="form.phone" >
                 {{--</div>--}}
+            </div>
+            <div class="form-group">
+                {{--<div class="col-md-6">--}}
+                    <input type="text" class="form-control" required placeholder="Email" v-model="form.email" >
+                {{--</div>--}}
+            </div>
+            <div class="form-group">
+                {{--<div class="col-md-6">--}}
+                <select type="text" class="form-control" required  v-model="form.truck_type" >
+                   <option>Truck type</option>
+                    <option value="1">8 wheeler</option>
+                    <option value="2">10 wheeler</option>
+                    <option value="3">12 wheeler</option>
+                </select>
+                {{--</div>--}}
+            </div>
+            <div class="form-group">
+                {{--<div class="col-md-6">--}}
+                    <select type="text" class="form-control" required v-model="form.type">
+                        <option>Type</option>
+                        <option value="1"> Broker</option>
+                        <option value="2"> Owner</option>
+                    </select>
+                {{--</div>--}}
+            </div>
+            <div class="row">
+                <div class="form-group col-md-10">
+                    {{--<div class="col-md-6">--}}
+                    <input type="text" class="form-control" id="location" placeholder="Preferred Route" >
+                    <div id="locality_details">
+                        <input id="administrative_area_level_1" type="text"
+                               hidden>
+                        <input id="administrative_area_level_2"
+                               type="text"
+                               hidden>
+                        <input id="locality" type="text" hidden>
+                        <input id="formatted_address" type="text" hidden>
+                    </div>
+                    {{--</div>--}}
+               </div>
 
-                {{--<button class="btn btn-primary col-md-offset-3" type="submit">Create</button>--}}
-            {{--</form>--}}
 
-        {{--</div>--}}
+            </div>
+
+        </form>
+                <div class="col-md-2">
+                    <button  class="btn btn-success" v-on:click="add">Add</button>
+                </div>
+                <button class="btn btn-primary" v-on:click="create">Create</button>
+
+            </div>
+            </div>
     </div>
 
 
@@ -86,30 +103,61 @@
     <script src="{{ url('js/jquery.geocomplete.min.js') }}"></script>
 
     <script>
-        var app = new Vue({
-            el: '#app',
+
+        new Vue({
+            el: '#lead-form',
             data: {
-                message: 'Hello Vue!'
+                form:{
+                    name      : '',
+                    cmpny_name: '',
+                    phone: '',
+                    email: '',
+                    truck_type: '',
+                    type:'',
+                },
+                route:[],
+                locations: [],
+
+
+            },
+            mounted: function () {
+                $('#location').geocomplete({
+                    country: 'IN',
+                    details: "#locality_details",
+                    detailsAttribute: 'id'
+                });
+            },
+            methods:{
+                add:function () {
+                    this.addroute();
+                    $('#location').val("");
+                },
+                addroute:function(){
+                    this.locations.push({
+                       'formatted_address': $('#formatted_address').val(),
+                        'state':$('#administrative_area_level_1').val(),
+                        'district':$('#administrative_area_level_2').val(),
+                        'locality':$('#locality').val()
+                });
+                },
+                create:function(){
+                    axios.post("/leads",{
+                        name : this.form.name,
+                        cmpny_name:this.form.cmpny_name,
+                        phone     :this.form.phone,
+                        email     :this.form.email,
+                        truck_type:this.form.truck_type,
+                        type      :this.form.type,
+                        route : this.locations
+
+                    }).then(function(response){
+                       console.log(response.data);
+                    });
+                }
             }
         })
 
-//         new Vue({
-//             el: '#leads',
-//             data: {
-//                 name:"helo",
-//                 state: '',
-//                 district: '',
-//                 locality: '',
-//                 formatted_address: '',
-//             },
-//             mounted: function () {
-//                 $('#location').geocomplete({
-//                     country: 'IN',
-//                     details: "#locality_details",
-//                     detailsAttribute: 'id'
-//                 });
-//             },
-//         })
+
 
      </script>
 @append
