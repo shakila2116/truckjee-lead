@@ -16,6 +16,9 @@ window.Vue = require('vue');
  */
 
 Vue.component('example', require('./components/Example.vue'));
+Vue.component('lead', require('./components/LeadCreate.vue'));
+Vue.component('lead-show', require('./components/LeadShow.vue'));
+Vue.component('report', require('./components/Report.vue'));
 
 const app = new Vue({
     el: '#app'

@@ -12,11 +12,13 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('auth.login');
 });
 
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 Route::resource('/leads', 'LeadController');
-Route::get('/reports', 'ReportController@index');
+Route::post('/leads/route', 'LeadController@addRoute');
+Route::get('/reports', 'ReportController@show');
+Route::post('/reports/show', 'ReportController@generateReport');

@@ -10,4 +10,14 @@ class Route extends Model
 
     protected $fillable = ['location_id','source_id','truck_type'];
 
+    public $with = ['location','source'];
+
+    public function location(){
+        return $this->belongsTo(Location::class,'location_id','id');
+    }
+
+    public function source(){
+        return $this->belongsTo(Source::class,'source_id','id');
+    }
+
 }

@@ -11,7 +11,11 @@
     <title>{{ config('app.name', 'Laravel') }}</title>
 
     <!-- Styles -->
-    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <link href="{{ mix('css/app.css') }}" rel="stylesheet">
+    <script src="http://maps.googleapis.com/maps/api/js?&libraries=places&key=AIzaSyD0QSm_gWjwbiW5NF6ScuQBUDfJHld-qc8"></script>
+    <link rel="stylesheet" href="{{ url('css/datatables.min.css')}}">
+    <link rel="stylesheet" href="{{ url('css/datatables.responsive.min.css')}}">
+
     @yield('head')
 </head>
 <body>
@@ -44,7 +48,7 @@
                     <ul class="nav navbar-nav navbar-right">
                         <!-- Authentication Links -->
                         @if (Auth::guest())
-                            <li><a href="{{ route('login') }}">Login</a></li>
+                            {{--<li><a href="{{ route('login') }}">Login</a></li>--}}
                             {{--<li><a href="{{ route('register') }}">Register</a></li>--}}
                         @else
                             <li class="dropdown">
@@ -81,7 +85,7 @@
                                    href="{{ url('/leads/create') }}">Create Lead
                                 </a>
                                 <a class="list-group-item"
-                                   href="{{ url('/leads/index') }}">View Leads
+                                   href="{{ url('/leads') }}">View Leads
                                 </a>
                                 <a class="list-group-item"
                                    href="{{ url('/reports') }}">Reports
@@ -99,7 +103,17 @@
     </div>
 
     <!-- Scripts -->
-    <script src="{{ asset('js/app.js') }}"></script>
+    <script src="{{ mix('js/app.js') }}"></script>
+    <script src="{{ url('js/jquery.geocomplete.min.js') }}"></script>
+    <script src="{{ url('js/datatables.min.js') }}"></script>
+    <script src="{{ url('js/datatables.responsive.min.js') }}"></script>
+    <script>
+        $('#table').dataTable({
+            responsive: true
+        });
+    </script>
+
+
     {{--<script src="{{url("js/jquery-ui.js")}}"></script>--}}
 
     @yield('scripts')
