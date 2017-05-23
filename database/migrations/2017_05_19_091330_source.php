@@ -20,12 +20,17 @@ class Source extends Migration
             $table->string('phone')->unique();
             $table->string('email')->unique();
             $table->smallInteger('type');
+            $table->integer('lead_location_id')->unsigned();
             $table->timestamps();
         });
         Schema::create('truck_models', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name')->unique();
             $table->timestamps();
+        });
+        Schema::table('source',function ($table){
+            $table->foreign('lead_location_id')->references('id')->on('location')->onUpdate('cascade')->onDelete('cascade');
+
         });
 
     }

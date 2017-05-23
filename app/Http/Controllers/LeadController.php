@@ -20,20 +20,20 @@ class LeadController extends Controller
         return view('leads.create')->with(['truck_type'=> TruckModels::all()]);
     }
 
-    public function store(Request $request){
-        $source  = Source::create([
-            'name' =>$request->name ,
-            'company_name'=>$request->cmpny_name,
-            'phone'=>$request->phone,
-            'email'=>$request->email,
-            'type'=>$request->type
-        ]);
-        return $source;
-    }
-
-//    public function store(SourceRequest $request){
-//        return $request->save();
+//    public function store(Request $request){
+//        $source  = Source::create([
+//            'name' =>$request->name ,
+//            'company_name'=>$request->cmpny_name,
+//            'phone'=>$request->phone,
+//            'email'=>$request->email,
+//            'type'=>$request->type
+//        ]);
+//        return $source;
 //    }
+
+    public function store(SourceRequest $request){
+        return $request->save();
+    }
 
     public function addRoute(Request $request){
 

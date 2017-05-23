@@ -7,11 +7,11 @@
 @section('content')
     <div class="panel panel-info">
         <div class="panel-heading">
-            Leads
+            Leads-Add Preferred Route
         </div>
         <div class="panel-body" id="lead-show">
             <lead-show :id="{{ $id }}" :truck_type="{{$truck_type}}"></lead-show>
-            </div>
+        </div>
     </div>
 
     @endsection

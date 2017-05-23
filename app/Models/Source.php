@@ -17,6 +17,11 @@ class Source extends Model
         return $this->hasMany(Route::class,'source_id','id');
     }
 
+    public function location($id){
+        $loc =  Location::find($id);
+        return $loc->formatted_address;
+    }
+
     public function type($id){
         switch ($id){
             case 1:

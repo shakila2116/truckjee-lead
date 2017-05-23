@@ -1760,6 +1760,30 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
@@ -1773,6 +1797,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 type: ''
             },
             sources: [],
+            errors: [],
             sourceid: 0
         };
     },
@@ -1783,18 +1808,25 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     methods: {
         create: function create() {
             var self = this;
+            self.errors = [];
+            self.sources = [];
             axios.post("/leads", {
                 name: self.form.name,
                 cmpny_name: self.form.cmpny_name,
                 phone: self.form.phone,
                 email: self.form.email,
-                type: self.form.type
+                type: self.form.type,
+                formatted_address: $('#formatted_address').val(),
+                state: $('#administrative_area_level_1').val(),
+                district: $('#administrative_area_level_2').val(),
+                locality: $('#locality').val()
             }).then(function (response) {
                 self.sources.push(response.data);
                 self.sourceid = self.sources[0].id;
+                console.log(self.sources);
                 window.location.href = "/leads/" + self.sourceid;
             }).catch(function (error) {
-                alert("Email or Phone no is invalid");
+                self.errors.push(error.response.data);
             });
         },
         show: function show() {
@@ -1853,6 +1885,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     props: ['truck_type', 'id'],
@@ -1868,7 +1903,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         add: function add() {
             var add = $('#formatted_address').val();
             var type = $('#truck_type').val();
-            if (add != "" || type != "") {
+            if (add != "" && type != "") {
                 document.getElementById('save').style.display = "block";
                 this.addroute();
                 $('#location').val("");
@@ -1993,6 +2028,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         $('#location').val("");
         $('#truck_type').val("");
       });
+
+      setTimeout(function () {
+        $('#table').dataTable({
+          responsive: true
+        });
+      }, 1000);
     },
     clear: function clear() {
       var self = this;
@@ -32129,6 +32170,8 @@ module.exports = Component.exports
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('div', {
+    staticClass: "row"
+  }, [_c('div', {
     staticClass: "col-md-12"
   }, [_c('table', {
     directives: [{
@@ -32146,7 +32189,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "id": "addroute"
     }
   }, [_vm._m(1), _vm._v(" "), _c('div', {
-    staticClass: "form-group col-md-3"
+    staticClass: "form-group col-md-2"
   }, [_c('select', {
     staticClass: "form-control",
     attrs: {
@@ -32158,15 +32201,17 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       domProps: {
         "value": type.id
       }
-    }, [_vm._v("\n                            " + _vm._s(type.name) + "\n                      ")])
+    }, [_vm._v("\n                          " + _vm._s(type.name) + "\n                    ")])
   }))]), _vm._v(" "), _c('div', {
-    staticClass: "col-md-2"
+    staticClass: "form-group col-md-2"
   }, [_c('button', {
     staticClass: "btn btn-warning",
     on: {
       "click": _vm.add
     }
-  }, [_vm._v("Add")])])]), _vm._v(" "), _c('button', {
+  }, [_vm._v("Add")])]), _vm._v(" "), _c('div', {
+    staticClass: "form-group col-md-2"
+  }, [_c('button', {
     staticClass: "btn btn-success",
     staticStyle: {
       "display": "none"
@@ -32177,14 +32222,14 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     on: {
       "click": _vm.save
     }
-  }, [_vm._v("Save")])])
+  }, [_vm._v("Save")])])])])])
 },staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('thead', [_c('tr', [_c('th', {
     staticClass: "col-md-6"
   }, [_vm._v("Preferred Route")])])])
 },function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('div', {
-    staticClass: "form-group col-md-7"
+    staticClass: "form-group col-md-6"
   }, [_c('input', {
     staticClass: "form-control",
     attrs: {
@@ -32236,7 +32281,7 @@ if (false) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('div', {
-    staticClass: "col-md-12"
+    staticClass: "col-md-6"
   }, [_c('form', {
     on: {
       "submit": function($event) {
@@ -32330,7 +32375,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }],
     staticClass: "form-control",
     attrs: {
-      "type": "text",
+      "type": "email",
       "required": "",
       "placeholder": "Email"
     },
@@ -32343,7 +32388,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         _vm.form.email = $event.target.value
       }
     }
-  })]), _vm._v(" "), _c('div', {
+  })]), _vm._v(" "), _vm._m(0), _vm._v(" "), _c('div', {
     staticClass: "form-group"
   }, [_c('select', {
     directives: [{
@@ -32387,8 +32432,62 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     attrs: {
       "id": "create"
     }
-  }, [_vm._v("Create")])])])
-},staticRenderFns: []}
+  }, [_vm._v("Create")])]), _vm._v(" "), _c('div', {
+    directives: [{
+      name: "show",
+      rawName: "v-show",
+      value: (_vm.errors.length),
+      expression: "errors.length"
+    }],
+    staticClass: "panel-danger"
+  }, [_c('ul', {
+    staticClass: "list-group"
+  }, _vm._l((_vm.errors), function(error) {
+    return _c('li', {
+      staticClass: "list-group-item"
+    }, [(error.phone) ? _c('div', [_vm._v("\n                  " + _vm._s(error.phone) + "\n              ")]) : _vm._e(), _vm._v(" "), (error.email) ? _c('div', [_vm._v("\n                  " + _vm._s(error.email) + "\n               ")]) : _vm._e()])
+  }))])])
+},staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
+    staticClass: "form-group"
+  }, [_c('input', {
+    staticClass: "form-control",
+    attrs: {
+      "type": "text",
+      "id": "location",
+      "placeholder": "Source Address",
+      "required": ""
+    }
+  }), _vm._v(" "), _c('div', {
+    attrs: {
+      "id": "locality_details"
+    }
+  }, [_c('input', {
+    attrs: {
+      "id": "administrative_area_level_1",
+      "type": "text",
+      "hidden": ""
+    }
+  }), _vm._v(" "), _c('input', {
+    attrs: {
+      "id": "administrative_area_level_2",
+      "type": "text",
+      "hidden": ""
+    }
+  }), _vm._v(" "), _c('input', {
+    attrs: {
+      "id": "locality",
+      "type": "text",
+      "hidden": ""
+    }
+  }), _vm._v(" "), _c('input', {
+    attrs: {
+      "id": "formatted_address",
+      "type": "text",
+      "hidden": ""
+    }
+  })])])
+}]}
 module.exports.render._withStripped = true
 if (false) {
   module.hot.accept()

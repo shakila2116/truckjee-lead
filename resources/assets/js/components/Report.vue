@@ -91,6 +91,13 @@ export default {
 
                     });
 
+                    setTimeout(function(){
+                      $('#table').dataTable({
+                                responsive: true
+                            });
+                    }, 1000);
+
+
              },
             clear:function(){
                         var self = this;

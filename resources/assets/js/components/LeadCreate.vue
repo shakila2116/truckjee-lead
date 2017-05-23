@@ -1,7 +1,7 @@
 
 <template>
-<div class="col-md-12">
-  <form v-on:submit.prevent="create()">
+  <div class="col-md-6">
+     <form v-on:submit.prevent="create()">
             <div class="form-group">
                     <input type="text" class="form-control" required placeholder="Name" v-model="form.name">
             </div>
@@ -12,7 +12,19 @@
                     <input type="number" class="form-control" required placeholder="Mobile No" v-model="form.phone" >
             </div>
             <div class="form-group">
-                    <input type="text" class="form-control" required placeholder="Email" v-model="form.email" >
+                    <input type="email" class="form-control" required placeholder="Email" v-model="form.email" >
+            </div>
+            <div class="form-group">
+                   <input type="text" class="form-control" id="location" placeholder="Source Address" required>
+                    <div id="locality_details">
+                <input id="administrative_area_level_1" type="text"
+                       hidden>
+                <input id="administrative_area_level_2"
+                       type="text"
+                       hidden>
+                <input id="locality" type="text" hidden>
+                <input id="formatted_address" type="text" hidden>
+                    </div>
             </div>
             <div class="form-group">
                     <select type="text" class="form-control" required v-model="form.type">
@@ -22,8 +34,20 @@
                     </select>
             </div>
             <button class="btn btn-primary" id="create">Create</button>
-        </form>
-        </div>
+     </form>
+     <div v-show="errors.length" class="panel-danger">
+             <ul class="list-group">
+               <li class="list-group-item" v-for="error in errors">
+                <div v-if="error.phone">
+                    {{error.phone}}
+                </div>
+                <div v-if="error.email">
+                    {{error.email}}
+                 </div>
+                </li>
+             </ul>
+     </div>
+  </div>
 </template>
 <script>
     export default {
@@ -38,6 +62,7 @@
                     type:''
                 },
                 sources: [],
+                errors:[],
                 sourceid:0
                 }
             },
@@ -48,18 +73,25 @@
             methods:{
                 create:function(){
                     var self = this;
+                    self.errors = [];
+                    self.sources = [];
                     axios.post("/leads",{
                         name : self.form.name,
                         cmpny_name:self.form.cmpny_name,
                         phone     :self.form.phone,
                         email     :self.form.email,
                         type      :self.form.type,
+                        formatted_address: $('#formatted_address').val(),
+                        state: $('#administrative_area_level_1').val(),
+                        district: $('#administrative_area_level_2').val(),
+                        locality: $('#locality').val(),
                     }).then(function(response){
                         self.sources.push(response.data);
                        self.sourceid = self.sources[0].id;
-                       window.location.href ="/leads/"+self.sourceid
-                    }).catch(function (error) {
-                        alert("Email or Phone no is invalid");
+                       console.log(self.sources);
+                      window.location.href ="/leads/"+self.sourceid
+                     }).catch(function (error) {
+                        self.errors.push(error.response.data);
                     });
                 },
                 show:function () {

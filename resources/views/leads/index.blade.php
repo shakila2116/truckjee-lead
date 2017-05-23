@@ -17,8 +17,8 @@
                         <tr>
                             <th class="col-md-1">No</th>
                             <th class="col-md-2">Name</th>
-                            <th class="col-md-2">Company Name</th>
                             <th class="col-md-2">Details</th>
+                            <th class="col-md-2">Source</th>
                             <th class="col-md-2">preferred Route</th>
                             <th class="col-md-1">Action</th>
                         </tr>
@@ -28,9 +28,11 @@
                             <tr>
                                 <td>{{$lead->id}}</td>
                                 <td>{{$lead->name}} -<b>{{ $lead->type($lead->type) }}</b></td>
-                                <td>{{ $lead->company_name }} </td>
-                                <td>Phone: <b>{{ $lead->phone }}</b><br/>
-                                    Email: <b>{{ $lead->email }}</b></td>
+                                <td> Company: <b>{{$lead->company_name }}</b><br/>
+                                    Phone: <b>{{ $lead->phone }}</b><br/>
+                                    Email: <b>{{ $lead->email }}</b>
+                                </td>
+                                <td>{{$lead->location($lead->lead_location_id)}}</td>
                                 <td>
                                     <ul>
                                         @foreach($lead->route as $val)
@@ -55,5 +57,10 @@
     @endsection
 
 @section('scripts')
+    <script>
+        $('#table').dataTable({
+            responsive: true
+        });
+    </script>
 
     @append

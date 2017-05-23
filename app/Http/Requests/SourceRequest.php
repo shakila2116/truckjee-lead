@@ -2,7 +2,10 @@
 
 namespace App\Http\Requests;
 
+use App\Models\Location;
+use App\Models\Source;
 use Illuminate\Foundation\Http\FormRequest;
+use Mockery\Exception;
 
 class SourceRequest extends FormRequest
 {
@@ -32,13 +35,30 @@ class SourceRequest extends FormRequest
     }
 
     public function save(){
-        $source  = Source::create([
-            'name' => request('name') ,
-            'company_name'=>request('cmpny_name'),
-            'phone'=>request('phone'),
-            'email'=>request('email'),
-            'type'=>request('type')
-        ]);
-        return $source;
+        $location = Location::where('formatted_address',request('formatted_address'))->first();
+        if ($location == null) {
+            $location = Location::create([
+                'formatted_address' => request('formatted_address'),
+                'state' => request('state'),
+                'district' => request('district'),
+                'locality' => request('locality'),
+                'created_by' => Auth()->user()->id
+            ]);
+        }
+        try {
+            $source = Source::create([
+                'name' => request('name'),
+                'company_name' => request('cmpny_name'),
+                'phone' => request('phone'),
+                'email' => request('email'),
+                'type' => request('type'),
+                'lead_location_id'=> $location->id
+            ]);
+            return $source;
+
+        }catch (\Exception $e){
+            return $e;
+        }
+
     }
 }

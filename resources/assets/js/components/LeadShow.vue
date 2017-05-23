@@ -1,6 +1,6 @@
 <template>
-
-  <div class="col-md-12">
+    <div class="row">
+        <div class="col-md-12">
             <table v-show="locations.length" class="table table-bordered">
                 <thead>
                 <tr>
@@ -12,7 +12,7 @@
                 </tr>
             </table>
             <div id="addroute"  class="row">
-               <div class="form-group col-md-7">
+               <div class="form-group col-md-6">
                    <input type="text" class="form-control" id="location" placeholder="Preferred Route" >
                     <div id="locality_details">
                 <input id="administrative_area_level_1" type="text"
@@ -24,7 +24,7 @@
                 <input id="formatted_address" type="text" hidden>
                     </div>
                 </div>
-                 <div class="form-group col-md-3">
+                 <div class="form-group col-md-2">
 
                      <select class="form-control" required  id="truck_type">
                         <option v-for="type in truck_type"  :value="type.id">
@@ -33,11 +33,14 @@
                       </select>
                   </div>
 
-        <div class="col-md-2">
-            <button class="btn btn-warning" v-on:click="add">Add</button>
+               <div class="form-group col-md-2">
+                    <button class="btn btn-warning" v-on:click="add">Add</button>
+               </div>
+               <div class="form-group col-md-2">
+                      <button class="btn btn-success" v-on:click="save" style="display: none" id="save">Save</button>
+                </div>
+             </div>
         </div>
-    </div>
-            <button class="btn btn-success" v-on:click="save" style="display: none" id="save">Save</button>
     </div>
 </template>
 
@@ -57,7 +60,7 @@
                    add: function () {
                        var add = $('#formatted_address').val();
                        var type = $('#truck_type').val();
-                       if (( add != "") || ( type != "")) {
+                       if (( add != "") && ( type != "")) {
                            document.getElementById('save').style.display = "block";
                            this.addroute();
                            $('#location').val("");

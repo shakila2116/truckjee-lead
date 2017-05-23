@@ -107,11 +107,7 @@
     <script src="{{ url('js/jquery.geocomplete.min.js') }}"></script>
     <script src="{{ url('js/datatables.min.js') }}"></script>
     <script src="{{ url('js/datatables.responsive.min.js') }}"></script>
-    <script>
-        $('#table').dataTable({
-            responsive: true
-        });
-    </script>
+
 
 
     {{--<script src="{{url("js/jquery-ui.js")}}"></script>--}}
