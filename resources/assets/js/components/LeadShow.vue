@@ -7,9 +7,11 @@
                     <th class="col-md-6">Preferred Route</th>
                 </tr>
                 </thead>
+                <tbody>
                 <tr v-for="(data, index) in locations">
                     <td>{{ data.formatted_address }}</td>
                 </tr>
+                </tbody>
             </table>
             <div id="addroute"  class="row">
                <div class="form-group col-md-6">
@@ -64,7 +66,6 @@
                            document.getElementById('save').style.display = "block";
                            this.addroute();
                            $('#location').val("");
-                           $('#truck_type').val("");
                        } else {
                            alert("Select any one field");
                        }

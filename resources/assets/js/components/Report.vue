@@ -16,7 +16,7 @@
                         <div class="form-group col-md-2">
 
                          <select class="form-control" required  id="truck_type">
-                          <option value="" disabled selected>Select Role</option>
+                                <option value="" disabled selected>Truck Type</option>
                                      <option v-for="type in truck_type"  :value="type.id">
                                               {{type.name}}
                                 </option>
@@ -37,6 +37,7 @@
                                 <th>Company Name</th>
                                 <th>Phone</th>
                                 <th>Email</th>
+                                <th>Source</th>
                                 <th>Preferred Route</th>
                             </tr>
                             </thead>
@@ -47,7 +48,8 @@
                                 <td>{{ data.source.company_name }}</td>
                                 <td>{{ data.source.phone }}</td>
                                 <td>{{ data.source.email }}</td>
-                                <td>{{ data.location.formatted_address }}</td>
+                                <td>{{ data.source.lead_location.formatted_address}}</td>
+                                <td>{{ data.location.formatted_address }} - <b> {{data.truck_type.name}} </b></td>
                             </tr>
                             </tbody>
 
@@ -67,15 +69,20 @@ export default {
      data(){
 
       return {
+
        route:[],
+       inc:1,
+       table:""
       }
 
     },
      mounted: function () {
-
                },
      methods:{
             generate:function () {
+            var table  = $('#table').DataTable();
+                    table.destroy();
+
                         var self =this;
                         self.route = [];
                    axios.post('/reports/show',{
@@ -87,18 +94,18 @@ export default {
                     }).then(function (response) {
                            self.route.push(response.data);
                             $('#location').val("");
+                            $('#formatted_address').val("")
                             $('#truck_type').val("");
 
                     });
-
                     setTimeout(function(){
-                      $('#table').dataTable({
+                      $('#table').DataTable({
                                 responsive: true
                             });
                     }, 1000);
 
-
              },
+
             clear:function(){
                         var self = this;
                         self.route = [];

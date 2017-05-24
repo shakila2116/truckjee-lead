@@ -10,6 +10,8 @@ class Source extends Model
 
     protected $guarded =['id'];
 
+    protected $with = ['leadLocation'];
+
     public function user(){
         return $this->belongsTo('App\User','created_by','id');
     }
@@ -22,6 +24,13 @@ class Source extends Model
         return $loc->formatted_address;
     }
 
+    public function leadLocation(){
+        return $this->hasOne(Location::class,'id','lead_location_id');
+    }
+    public function truckType($id){
+        $model =  TruckModels::find($id);
+        return $model->name;
+    }
     public function type($id){
         switch ($id){
             case 1:

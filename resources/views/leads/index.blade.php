@@ -35,8 +35,8 @@
                                 <td>{{$lead->location($lead->lead_location_id)}}</td>
                                 <td>
                                     <ul>
-                                        @foreach($lead->route as $val)
-                                            <li>{{$val->location->formatted_address}} </li>
+                                        @foreach($lead->route as $val )
+                                            <li>{{$val->location->formatted_address}} - <b>{{ $lead->truckType($val->truck_type)}} </b> </li>
                                         @endforeach
                                     </ul>
 
@@ -46,7 +46,6 @@
                         @endforeach
                         </tbody>
                     </table>
-
                 </div>
             </div>
         </div>

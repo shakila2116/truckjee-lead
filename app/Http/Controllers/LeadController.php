@@ -20,35 +20,15 @@ class LeadController extends Controller
         return view('leads.create')->with(['truck_type'=> TruckModels::all()]);
     }
 
-//    public function store(Request $request){
-//        $source  = Source::create([
-//            'name' =>$request->name ,
-//            'company_name'=>$request->cmpny_name,
-//            'phone'=>$request->phone,
-//            'email'=>$request->email,
-//            'type'=>$request->type
-//        ]);
-//        return $source;
-//    }
-
     public function store(SourceRequest $request){
-        return $request->save();
+        $location = $this->location($request);
+        return $request->save($location->id);
     }
 
     public function addRoute(Request $request){
 
-
         foreach ($request->route as $loc) {
-            $location = Location::where('formatted_address', $loc['formatted_address'])->first();
-            if ($location == null) {
-            $location = Location::create([
-                'formatted_address' => $loc['formatted_address'],
-                'state' => $loc['state'],
-                'district' => $loc['district'],
-                'locality' => $loc['locality'],
-                'created_by' => Auth()->user()->id
-            ]);
-           }
+          $location = $this->location($loc);
             $route = Route::create([
                 'location_id' =>$location->id,
                 'source_id'=>$request->source_id,
@@ -60,8 +40,23 @@ class LeadController extends Controller
     public function show($id){
         return view('leads.show')->with(['truck_type'=> TruckModels::all(),'id'=>$id]);
     }
-    protected function truckType($id){
-        return "fkgj";
+
+    protected function location($loc)
+    {
+        $location = Location::where('formatted_address', $loc['formatted_address'])->first();
+        if ($location == null) {
+            $location = Location::create([
+                'formatted_address' => $loc['formatted_address'],
+                'state' => $loc['state'],
+                'district' => $loc['district'],
+                'locality' => $loc['locality'],
+                'created_by' => Auth()->user()->id
+            ]);
+        }
+        return $location;
+    }
+    protected function truckType(){
+        return "helo";
     }
 
 

@@ -5,11 +5,11 @@
                <ul class="list-group">
                  <li class="list-group-item" v-for="error in errors">
                   <div v-if="error.phone">
-                      {{error.phone}}
+                      {{ error.phone }}
                   </div>
                   <div v-if="error.email">
-                      {{error.email}}
-                   </div>
+                      {{ error.email }}
+                  </div>
                   </li>
                </ul>
        </div>
@@ -89,10 +89,9 @@
                     }).then(function(response){
                         self.sources.push(response.data);
                        self.sourceid = self.sources[0].id;
-                       console.log(self.sources);
                       window.location.href ="/leads/"+self.sourceid
                      }).catch(function (error) {
-                        self.errors.push(error.response.data);
+                       self.errors.push(error.response.data);
                     });
                 },
                 show:function () {

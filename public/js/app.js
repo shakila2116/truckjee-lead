@@ -1824,7 +1824,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             }).then(function (response) {
                 self.sources.push(response.data);
                 self.sourceid = self.sources[0].id;
-                console.log(self.sources);
                 window.location.href = "/leads/" + self.sourceid;
             }).catch(function (error) {
                 self.errors.push(error.response.data);
@@ -1843,6 +1842,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
 //
 //
 //
@@ -1908,7 +1909,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 document.getElementById('save').style.display = "block";
                 this.addroute();
                 $('#location').val("");
-                $('#truck_type').val("");
             } else {
                 alert("Select any one field");
             }
@@ -2001,6 +2001,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -2009,13 +2011,19 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
   data: function data() {
 
     return {
-      route: []
+
+      route: [],
+      inc: 1,
+      table: ""
     };
   },
 
   mounted: function mounted() {},
   methods: {
     generate: function generate() {
+      var table = $('#table').DataTable();
+      table.destroy();
+
       var self = this;
       self.route = [];
       axios.post('/reports/show', {
@@ -2027,15 +2035,16 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       }).then(function (response) {
         self.route.push(response.data);
         $('#location').val("");
+        $('#formatted_address').val("");
         $('#truck_type').val("");
       });
-
       setTimeout(function () {
-        $('#table').dataTable({
+        $('#table').DataTable({
           responsive: true
         });
       }, 1000);
     },
+
     clear: function clear() {
       var self = this;
       self.route = [];
@@ -32182,9 +32191,9 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       expression: "locations.length"
     }],
     staticClass: "table table-bordered"
-  }, [_vm._m(0), _vm._v(" "), _vm._l((_vm.locations), function(data, index) {
+  }, [_vm._m(0), _vm._v(" "), _c('tbody', _vm._l((_vm.locations), function(data, index) {
     return _c('tr', [_c('td', [_vm._v(_vm._s(data.formatted_address))])])
-  })], 2), _vm._v(" "), _c('div', {
+  }))]), _vm._v(" "), _c('div', {
     staticClass: "row",
     attrs: {
       "id": "addroute"
@@ -32296,7 +32305,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }, _vm._l((_vm.errors), function(error) {
     return _c('li', {
       staticClass: "list-group-item"
-    }, [(error.phone) ? _c('div', [_vm._v("\n                    " + _vm._s(error.phone) + "\n                ")]) : _vm._e(), _vm._v(" "), (error.email) ? _c('div', [_vm._v("\n                    " + _vm._s(error.email) + "\n                 ")]) : _vm._e()])
+    }, [(error.phone) ? _c('div', [_vm._v("\n                    " + _vm._s(error.phone) + "\n                ")]) : _vm._e(), _vm._v(" "), (error.email) ? _c('div', [_vm._v("\n                    " + _vm._s(error.email) + "\n                ")]) : _vm._e()])
   }))]), _vm._v(" "), _c('form', {
     on: {
       "submit": function($event) {
@@ -32520,7 +32529,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "disabled": "",
       "selected": ""
     }
-  }, [_vm._v("Select Role")]), _vm._v(" "), _vm._l((_vm.truck_type), function(type) {
+  }, [_vm._v("Truck Type")]), _vm._v(" "), _vm._l((_vm.truck_type), function(type) {
     return _c('option', {
       domProps: {
         "value": type.id
@@ -32552,7 +32561,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "id": "table"
     }
   }, [_vm._m(1), _vm._v(" "), _c('tbody', _vm._l((_vm.route[0]), function(data) {
-    return _c('tr', [_c('td', [_vm._v(_vm._s(data.source.name))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(data.source.company_name))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(data.source.phone))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(data.source.email))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(data.location.formatted_address))])])
+    return _c('tr', [_c('td', [_vm._v(_vm._s(data.source.name))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(data.source.company_name))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(data.source.phone))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(data.source.email))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(data.source.lead_location.formatted_address))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(data.location.formatted_address) + " - "), _c('b', [_vm._v(" " + _vm._s(data.truck_type.name) + " ")])])])
   }))])])])
 },staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('div', {
@@ -32597,7 +32606,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
 },function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('thead', {
     staticClass: "table-header-primary"
-  }, [_c('tr', [_c('th', [_vm._v("Name")]), _vm._v(" "), _c('th', [_vm._v("Company Name")]), _vm._v(" "), _c('th', [_vm._v("Phone")]), _vm._v(" "), _c('th', [_vm._v("Email")]), _vm._v(" "), _c('th', [_vm._v("Preferred Route")])])])
+  }, [_c('tr', [_c('th', [_vm._v("Name")]), _vm._v(" "), _c('th', [_vm._v("Company Name")]), _vm._v(" "), _c('th', [_vm._v("Phone")]), _vm._v(" "), _c('th', [_vm._v("Email")]), _vm._v(" "), _c('th', [_vm._v("Source")]), _vm._v(" "), _c('th', [_vm._v("Preferred Route")])])])
 }]}
 module.exports.render._withStripped = true
 if (false) {
