@@ -12,13 +12,6 @@
         <div class="panel-body">
 
             <lead></lead>
-            {{--<div class="panel-danger">--}}
-                {{--@if (isset($errors) && $errors->has(''))--}}
-                    {{--@foreach ($errors->all() as $error)--}}
-                        {{--<div>{{ $error }}</div>--}}
-                    {{--@endforeach--}}
-                {{--@endif--}}
-            {{--</div>--}}
         </div>
     </div>
 

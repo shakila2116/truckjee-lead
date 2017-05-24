@@ -1784,6 +1784,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
@@ -32282,7 +32283,21 @@ if (false) {
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('div', {
     staticClass: "col-md-6"
-  }, [_c('form', {
+  }, [_c('div', {
+    directives: [{
+      name: "show",
+      rawName: "v-show",
+      value: (_vm.errors.length),
+      expression: "errors.length"
+    }],
+    staticClass: "panel panel-danger"
+  }, [_c('ul', {
+    staticClass: "list-group"
+  }, _vm._l((_vm.errors), function(error) {
+    return _c('li', {
+      staticClass: "list-group-item"
+    }, [(error.phone) ? _c('div', [_vm._v("\n                    " + _vm._s(error.phone) + "\n                ")]) : _vm._e(), _vm._v(" "), (error.email) ? _c('div', [_vm._v("\n                    " + _vm._s(error.email) + "\n                 ")]) : _vm._e()])
+  }))]), _vm._v(" "), _c('form', {
     on: {
       "submit": function($event) {
         $event.preventDefault();
@@ -32432,21 +32447,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     attrs: {
       "id": "create"
     }
-  }, [_vm._v("Create")])]), _vm._v(" "), _c('div', {
-    directives: [{
-      name: "show",
-      rawName: "v-show",
-      value: (_vm.errors.length),
-      expression: "errors.length"
-    }],
-    staticClass: "panel-danger"
-  }, [_c('ul', {
-    staticClass: "list-group"
-  }, _vm._l((_vm.errors), function(error) {
-    return _c('li', {
-      staticClass: "list-group-item"
-    }, [(error.phone) ? _c('div', [_vm._v("\n                  " + _vm._s(error.phone) + "\n              ")]) : _vm._e(), _vm._v(" "), (error.email) ? _c('div', [_vm._v("\n                  " + _vm._s(error.email) + "\n               ")]) : _vm._e()])
-  }))])])
+  }, [_vm._v("Create")])])])
 },staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('div', {
     staticClass: "form-group"

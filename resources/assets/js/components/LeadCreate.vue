@@ -1,6 +1,18 @@
 
 <template>
   <div class="col-md-6">
+  <div v-show="errors.length" class="panel panel-danger">
+               <ul class="list-group">
+                 <li class="list-group-item" v-for="error in errors">
+                  <div v-if="error.phone">
+                      {{error.phone}}
+                  </div>
+                  <div v-if="error.email">
+                      {{error.email}}
+                   </div>
+                  </li>
+               </ul>
+       </div>
      <form v-on:submit.prevent="create()">
             <div class="form-group">
                     <input type="text" class="form-control" required placeholder="Name" v-model="form.name">
@@ -35,18 +47,7 @@
             </div>
             <button class="btn btn-primary" id="create">Create</button>
      </form>
-     <div v-show="errors.length" class="panel-danger">
-             <ul class="list-group">
-               <li class="list-group-item" v-for="error in errors">
-                <div v-if="error.phone">
-                    {{error.phone}}
-                </div>
-                <div v-if="error.email">
-                    {{error.email}}
-                 </div>
-                </li>
-             </ul>
-     </div>
+
   </div>
 </template>
 <script>
