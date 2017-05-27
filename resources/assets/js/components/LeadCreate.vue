@@ -1,15 +1,10 @@
 
 <template>
   <div class="col-md-6">
-  <div v-show="errors.length" class="panel panel-danger">
+     <div v-show="errors.length" class="panel panel-danger">
                <ul class="list-group">
                  <li class="list-group-item" v-for="error in errors">
-                  <div v-if="error.phone">
-                      {{ error.phone }}
-                  </div>
-                  <div v-if="error.email">
-                      {{ error.email }}
-                  </div>
+                 {{error}}
                   </li>
                </ul>
        </div>
@@ -91,7 +86,10 @@
                        self.sourceid = self.sources[0].id;
                       window.location.href ="/leads/"+self.sourceid
                      }).catch(function (error) {
-                       self.errors.push(error.response.data);
+                     if(error.response.data.phone[0]){
+                        self.errors.push(error.response.data.phone[0]);}
+                      if(error.response.data.email[0]){
+                        self.errors.push(error.response.data.email[0]);}
                     });
                 },
                 show:function () {

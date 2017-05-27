@@ -1780,11 +1780,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
-//
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
@@ -1826,7 +1821,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 self.sourceid = self.sources[0].id;
                 window.location.href = "/leads/" + self.sourceid;
             }).catch(function (error) {
-                self.errors.push(error.response.data);
+                if (error.response.data.phone[0]) {
+                    self.errors.push(error.response.data.phone[0]);
+                }
+                if (error.response.data.email[0]) {
+                    self.errors.push(error.response.data.email[0]);
+                }
             });
         },
         show: function show() {
@@ -32305,7 +32305,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }, _vm._l((_vm.errors), function(error) {
     return _c('li', {
       staticClass: "list-group-item"
-    }, [(error.phone) ? _c('div', [_vm._v("\n                    " + _vm._s(error.phone) + "\n                ")]) : _vm._e(), _vm._v(" "), (error.email) ? _c('div', [_vm._v("\n                    " + _vm._s(error.email) + "\n                ")]) : _vm._e()])
+    }, [_vm._v("\n               " + _vm._s(error) + "\n                ")])
   }))]), _vm._v(" "), _c('form', {
     on: {
       "submit": function($event) {
