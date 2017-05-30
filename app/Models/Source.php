@@ -2,13 +2,21 @@
 
 namespace App\Models;
 
+use App\Events\UserCreatedEvent;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Notifications\Notifiable;
 
 class Source extends Model
 {
+    use Notifiable;
+
     protected $table ='source';
 
     protected $guarded =['id'];
+
+    protected $events = [
+        'created' =>UserCreatedEvent::class
+    ];
 
     protected $with = ['leadLocation'];
 

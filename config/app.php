@@ -13,7 +13,7 @@ return [
     */
 
    // 'name' => env('APP_NAME', 'TruckJee Broker'),
-    'name' =>'TruckJee Broker',
+    'name' =>'TruckJee',
 
     /*
     |--------------------------------------------------------------------------

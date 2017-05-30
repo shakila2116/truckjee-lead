@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\UserCreatedEvent;
 use App\Http\Requests\SourceRequest;
 use App\Models\Location;
 use App\Models\Route;
@@ -22,11 +23,12 @@ class LeadController extends Controller
 
     public function store(SourceRequest $request){
         $location = $this->location($request);
-        return $request->save($location->id);
+        $source =  $request->save($location->id);
+        return redirect('leads/'.$source->id);
     }
 
     public function addRoute(Request $request){
-
+        $source = Source::find($request->source_id);
         foreach ($request->route as $loc) {
           $location = $this->location($loc);
             $route = Route::create([
@@ -35,6 +37,7 @@ class LeadController extends Controller
                 'truck_type'=>$loc['truck_type']
             ]);
         }
+        event(new UserCreatedEvent($source));
         return $location;
     }
     public function show($id){
@@ -44,6 +47,7 @@ class LeadController extends Controller
     protected function location($loc)
     {
         $location = Location::where('formatted_address', $loc['formatted_address'])->first();
+
         if ($location == null) {
             $location = Location::create([
                 'formatted_address' => $loc['formatted_address'],
@@ -55,9 +59,5 @@ class LeadController extends Controller
         }
         return $location;
     }
-    protected function truckType(){
-        return "helo";
-    }
-
 
 }
